@@ -191,7 +191,8 @@ def SPIN(dt, widlist=[10,1], iters=30, axis='both', verbose=False):
     """
     IXc = arange(dt.shape[1])
     IXr = arange(dt.shape[0])
-    assert axis in ['both', 0,1], 'axis must be 0, 1 or \'both\' '
+
+    assert axis in ['both','0','1'], 'axis must be 0, 1 or \'both\' '
     #Sort both axis
     if axis == 'both':
         CCc = 1 - corrcoef(dt.T) 
@@ -221,7 +222,7 @@ def SPIN(dt, widlist=[10,1], iters=30, axis='both', verbose=False):
             IXc= IXc[INDc]
         return IXr, IXc
     #Sort rows
-    elif axis == 0:
+    elif axis == '0':
         CCr = 1 - corrcoef(dt)
         if type(widlist) != list:
             widlist = _generate_widlist(dt, axis=0, step=widlist)
@@ -236,7 +237,7 @@ def SPIN(dt, widlist=[10,1], iters=30, axis='both', verbose=False):
             IXr = IXr[INDr]
         return IXr
     #Sort columns
-    elif axis == 1:
+    elif axis == '1':
         CCc = 1 - corrcoef(dt.T)
         if type(widlist) != list:
             widlist = _generate_widlist(dt, axis=1, step=widlist)
@@ -878,7 +879,12 @@ if __name__ == '__main__':
         print 'Input file:\n%s\n' % input_path
         print 'Output file:\n%s\n' % outfiles_path
 
-        results = SPIN(dt, widlist=runs_step, iters=runs_iters, axis=normal_spin_axis, verbose=verbose)
+	print(data)
+	print 'runs iters:\n%s\n' % runs_iters
+	print 'normal spin axis:\n%s\n' % normal_spin_axis
+
+	results = SPIN(data, widlist=runs_step, iters=runs_iters, axis=normal_spin_axis, verbose=verbose)
+	print(results)
 
         print '\nWriting output.\n'
 
